@@ -93,7 +93,11 @@ public class LoginPage extends AppCompatActivity {
                 if (tutor.getUsername().equals(username)) {
                     if (tutor.getPassword().equals(password)) {
                         Intent intent = new Intent(this, TutorPage.class);
+                        intent.putExtra("tutorID",tutor.getId());
                         startActivity(intent);
+
+
+
                     }
                 }
             }
@@ -105,7 +109,11 @@ public class LoginPage extends AppCompatActivity {
                 if (student.getUsername().equals(username)) {
                     if (student.getPassword().equals(password)) {
                         Intent intent = new Intent(this, StudentPage.class);
+                        intent.putExtra("studentID",student.getId());
+
+                        System.out.println("THE CURRENT ID IS !!!!!!!!! :" +student.getId());
                         startActivity(intent);
+
                         }
                     }
                 }
