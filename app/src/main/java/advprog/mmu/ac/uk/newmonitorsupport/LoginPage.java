@@ -25,99 +25,94 @@ public class LoginPage extends AppCompatActivity {
 
     //Retrieve idVariables from MainActivity.
 
-    Boolean idTutor;
-    Boolean idStudent;
-
     EditText user;
     EditText pass;
-    TextView message;
+    //TextView message;
 
-    TutorDAO dao= new TutorDAO();
-    StudentDAO sdao=new StudentDAO();
 
-    //New arraylist in loop
-    //ArrayList<String> tusernames=dao.getTutorUsernames();
-    //ArrayList<String> tpasswords=dao.getTutorPasswords() ;
-
-    ArrayList<Tutor> t = dao.getAllTutors();
-    ArrayList<Student> s=sdao.getAllStudents();
-   // ArrayList<String> spasswords=sdao.getStudentPasswords() ;
-
-    String[] tutors = {};
-    String[] students = {};
-
+    //global variable of chosenOption
+    String chosenOption;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_page);
 
+        //need to get the string sent that determines what button was chosen
+        Bundle extras = getIntent().getExtras();
 
-        System.out.println("Login Page loaded");
-
+        //store that chosen option in global variable chosenOption
+        chosenOption = (String) extras.get("chosen");
     }
 
 
 
 
     public void onClick_Login(View v) {
-        Intent ids=getIntent();
-        //ids.getBooleanExtra("idTutor",true);
-        //ids.getBooleanExtra("idStudent",true);
 
-
-
+        //need to get the inputs from the user, so attach the editTexts to variables
         user = findViewById(R.id.editUsername);
         pass = findViewById(R.id.editPassword);
-        message = findViewById(R.id.message_id);
+        //message = findViewById(R.id.message_id);
 
+        //store the inputs from both boxes
         String username = user.getText().toString();
         String password = pass.getText().toString();
-        String mess = message.getText().toString();
+        //String mess = message.getText().toString();
 
-        //Check if parameters match Value.
+        //if the option chosen was tutor
+        if (chosenOption.equals("Tutor"))
+        {
+            //create a tutorDAO
+            TutorDAO tutorDAO= new TutorDAO();
+            //grab all tutors and store in arraylist
+            ArrayList<Tutor> allTutors = tutorDAO.getAllTutors();
 
-        /*Store json. arraylist  sperate values.
-        and iterate over paswords,*/
-
-
-
-            //If id Tutor recieved iterate over the json Array
-           boolean youAreTutor=  ids.getBooleanExtra("idTutor",true);
-           System.out.println(youAreTutor);
-           boolean youAreStudent =  ids.getBooleanExtra("idStudent",true);
-           System.out.println(youAreStudent);
-
-        if(youAreTutor==true) {
-            for (Tutor tutor : t) {
-                if (tutor.getUsername().equals(username)) {
-                    if (tutor.getPassword().equals(password)) {
-                        Intent intent = new Intent(this, TutorPage.class);
-                        intent.putExtra("tutorID",tutor.getId());
-                        startActivity(intent);
-
-
-
-                    }
+            //for one to however many tutors grabbed
+            for(Tutor individualTutor : allTutors)
+            {
+                //check if the username and passwords match what are in the database
+                if (individualTutor.getUsername().equals(username) && individualTutor.getPassword().equals(password))
+                {
+                    //prepare new intent
+                    Intent intent = new Intent(this, TutorPage.class);
+                    //send the id of the tutor
+                    intent.putExtra("ID",individualTutor.getId());
+                    //start that activity
+                    startActivity(intent);
                 }
             }
-
-
         }
-        if(youAreStudent==true) {
-            for (Student student : s) {
-                if (student.getUsername().equals(username)) {
-                    if (student.getPassword().equals(password)) {
-                        Intent intent = new Intent(this, StudentPage.class);
-                        intent.putExtra("studentID",student.getId());
+        //if option chosen was student
+        if (chosenOption.equals("Student"))
+        {
+            //create studentDAO
+            StudentDAO studentDAO =new StudentDAO();
+            //grab all students and put in arraylist
+            ArrayList<Student> allStudents = studentDAO.getAllStudents();
 
-                        System.out.println("THE CURRENT ID IS !!!!!!!!! :" +student.getId());
-                        startActivity(intent);
-
-                        }
-                    }
+            //for one to however many students
+            for(Student individualStudent : allStudents)
+            {
+                //check if match whats in database
+                if (individualStudent.getUsername().equals(username) && individualStudent.getPassword().equals(password))
+                {
+                    //prepare intent
+                    Intent intent = new Intent(this, StudentHome.class);
+                    //send appropriate id
+                    intent.putExtra("ID",individualStudent.getId());
+                    //start activity
+                    startActivity(intent);
                 }
             }
+        }
+        else
+        {
+            System.out.println("not worked");
+        }
+
         }//end of login method
+
+
     };//end of class
 

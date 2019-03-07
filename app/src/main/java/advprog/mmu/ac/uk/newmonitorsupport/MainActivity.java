@@ -17,8 +17,8 @@ public class MainActivity extends AppCompatActivity {
     Button studentbtn;
     Button goLoginbtn;
 
-    Boolean idTutor;
-    Boolean idStudent;
+    String chosen;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,16 +36,11 @@ public class MainActivity extends AppCompatActivity {
 
         tutorbtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                idTutor = true;
+                chosen = "Tutor";
 
-                Intent tutor = new Intent(MainActivity.this, LoginPage.class);
-                tutor.putExtra("idTutor", idTutor);
-                startActivity(tutor);
-                System.out.println("Tutor button clicked");
-
-                //call getIntent() method in target activity
-                //use Intent.getStringExtra(String idTutor)
-                //Toast.makeText(LoginPage.this,idTutor);
+                Intent intent = new Intent(MainActivity.this, LoginPage.class);
+                intent.putExtra("chosen", chosen);
+                startActivity(intent);
             }
         });
 
@@ -53,13 +48,11 @@ public class MainActivity extends AppCompatActivity {
         studentbtn.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View view) {
-                idStudent = true;
+                chosen = "Student";
 
-                Intent student = new Intent(MainActivity.this, LoginPage.class);
-                student.putExtra("idStudent", idStudent);
-                startActivity(student);
-                System.out.println("Student button clicked");
-                //Toast.makeText(LoginPage.this,idStudent);
+                Intent intent = new Intent(MainActivity.this, LoginPage.class);
+                intent.putExtra("chosen", chosen);
+                startActivity(intent);
             }
 
 

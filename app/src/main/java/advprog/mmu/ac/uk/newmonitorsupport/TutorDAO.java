@@ -27,7 +27,7 @@ public class TutorDAO{
         try
         {
             // the url we wish to connect to
-            URL url = new URL("http://10.182.61.143:8005/projMonitoringdb/apiTutor");
+            URL url = new URL("http://10.182.54.37:8005/projMonitoringdb/apiTutor");
             // open the connection to the specified URL
             urlConnection = (HttpURLConnection) url.openConnection();
             // get the response from the server in an input stream

@@ -18,7 +18,7 @@ public class StudentPage extends AppCompatActivity {
 
         Intent ids=getIntent();
 
-        int id = ids.getIntExtra("studentID",0);
+        int id = ids.getIntExtra("ID",0);
 
         //console test for studentteam DAO
 
@@ -53,7 +53,7 @@ public class StudentPage extends AppCompatActivity {
             }
         }
 
-        ListView projlist = findViewById(R.id.projectList);
+        ListView projlist = findViewById(R.id.projectLis);
 
         ArrayAdapter arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, finalProjects);
 

@@ -3,6 +3,7 @@
     package="advprog.mmu.ac.uk.newmonitorsupport">
 
     <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -10,6 +11,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity
+            android:name=".StudentHome"
+            android:label="@string/title_activity_student_home"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -17,11 +22,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".LoginPage"></activity>
-        <activity android:name=".StudentPage"></activity>
-        <activity android:name=".TutorPage"></activity>
-
-
+        <activity android:name=".LoginPage" />
+        <activity android:name=".StudentPage" />
+        <activity android:name=".TutorPage" />
     </application>
 
 </manifest>

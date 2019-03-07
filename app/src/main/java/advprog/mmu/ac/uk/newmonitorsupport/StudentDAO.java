@@ -24,7 +24,7 @@ public class StudentDAO {
         try
         {
             // the url we wish to connect to
-            URL url = new URL("http://10.182.61.143:8005/projMonitoringdb/apiStudent");
+            URL url = new URL("http://10.182.54.37:8005/projMonitoringdb/apiStudent");
             // open the connection to the specified URL
             urlConnection = (HttpURLConnection) url.openConnection();
             // get the response from the server in an input stream
@@ -47,21 +47,18 @@ public class StudentDAO {
             JSONArray jsonArray = new JSONArray(response);
 
             // use a for loop to iterate over the JSON array
-            for (int i=0; i < jsonArray.length(); i++)
-            {
+            for (int i=0; i < jsonArray.length(); i++) {
                 // the following line of code will get the name of the cheese from the
                 // current JSON object and store it in a string variable called name
                 int id = jsonArray.getJSONObject(i).getInt("id");
                 String username = jsonArray.getJSONObject(i).get("username").toString();
                 String password = jsonArray.getJSONObject(i).get("password").toString();
 
-                Student student = new Student(id, username,password);
+                Student student = new Student(id, username, password);
                 students.add(student);
 
 
-
             }
-            return students;
         } catch (JSONException e) {
             e.printStackTrace();
         }
