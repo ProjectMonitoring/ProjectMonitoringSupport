@@ -23,12 +23,18 @@ public class StudentPage extends AppCompatActivity {
         //console test for studentteam DAO
 
         StudentTeamDAO dao = new StudentTeamDAO();
+        ThreadDAO tdao = new ThreadDAO();
 
         ArrayList<StudentTeam> studentteam = dao.getTeamID();
         ArrayList<Team> team = dao.getTeam();
         ArrayList<Project> projecr = dao.getProject();
+        ArrayList<Thread> thread = tdao.getThreads();
 
         ArrayList<Project> finalProjects = new ArrayList<>();
+
+        ArrayList<Thread> allThreads = new ArrayList<>();
+
+        //for retrieving projects
 
         for(StudentTeam s: studentteam){
             if(id == s.getStudentID()){
@@ -42,7 +48,15 @@ public class StudentPage extends AppCompatActivity {
                             if(T.getProjectid() == p.getId()){
                                 Project P = new Project(p.getId(),p.getUnit(),p.getYear(),p.getProjectname(),p.getFeedback(),p.getGrade());
 
-                                finalProjects.add(P);
+                                for(Thread thread1: thread){
+                                    if(thread1.getProjectid() == P.getId()){
+                                        Thread finalThread = new Thread(thread1.getID(),thread1.getProjectid(),thread1.getTitle(),thread1.getDate());
+
+                                        allThreads.add(finalThread);
+                                    }
+                                }
+
+
                             }
                         }
                     }
@@ -53,9 +67,13 @@ public class StudentPage extends AppCompatActivity {
             }
         }
 
+
+
+
+
         ListView projlist = findViewById(R.id.projectLis);
 
-        ArrayAdapter arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, finalProjects);
+        ArrayAdapter arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, allThreads);
 
         projlist.setAdapter(arrayAdapter);
     }
