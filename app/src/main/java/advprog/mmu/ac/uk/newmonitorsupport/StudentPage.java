@@ -11,6 +11,7 @@ import java.util.ArrayList;
 
 public class StudentPage extends AppCompatActivity {
 
+    String[] threadNames;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,7 +28,7 @@ public class StudentPage extends AppCompatActivity {
 
         ArrayList<StudentTeam> studentteam = dao.getTeamID();
         ArrayList<Team> team = dao.getTeam();
-        ArrayList<Project> projecr = dao.getProject();
+        ArrayList<Project> project = dao.getProject();
         ArrayList<Thread> thread = tdao.getThreads();
 
         ArrayList<Project> finalProjects = new ArrayList<>();
@@ -44,7 +45,7 @@ public class StudentPage extends AppCompatActivity {
                     if(S.getTeamID() == t.getID()){
                         Team T = new Team(t.getID(),t.getProjectid());
 
-                        for(Project p : projecr){
+                        for(Project p : project){
                             if(T.getProjectid() == p.getId()){
                                 Project P = new Project(p.getId(),p.getUnit(),p.getYear(),p.getProjectname(),p.getFeedback(),p.getGrade());
 

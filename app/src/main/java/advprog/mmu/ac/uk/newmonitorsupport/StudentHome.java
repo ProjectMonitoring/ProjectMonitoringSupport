@@ -1,112 +1,123 @@
 package advprog.mmu.ac.uk.newmonitorsupport;
 
 import android.content.Intent;
-import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.view.View;
-import android.support.design.widget.NavigationView;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.widget.EditText;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
-public class StudentHome extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+import java.util.ArrayList;
+
+public class StudentHome extends AppCompatActivity {
 
     int id;
+    ArrayList<Thread> allThreads = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_student_home);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        Intent ids = getIntent();
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        id = ids.getIntExtra("ID", 0);
+
+        //create instance of dao for studentteam which goes to team then project
+        StudentTeamDAO dao = new StudentTeamDAO();
+        //instance of dao for thread
+        ThreadDAO tdao = new ThreadDAO();
+        //in order to get all the project json data we want to display when user logs in
+        ArrayList<StudentTeam> studentteam = dao.getTeamID();
+        ArrayList<Team> team = dao.getTeam();
+        ArrayList<Project> project = dao.getProject();
+        ArrayList<Thread> thread = tdao.getThreads();
+
+        Project studentsProject = new Project();
+
+        //might have more than one thread so need arraylist to store
+        //ArrayList<Thread> allThreads = new ArrayList<>();
+
+        for (StudentTeam s : studentteam) {
+            if (id == s.getStudentID()) {
+                StudentTeam S = new StudentTeam(s.getStudentID(), s.getTeamID());
+
+                for (Team t : team) {
+                    if (S.getTeamID() == t.getID()) {
+                        Team T = new Team(t.getID(), t.getProjectid());
+
+                        for (Project p : project) {
+                            if (T.getProjectid() == p.getId()) {
+                                studentsProject = new Project(p.getId(), p.getUnit(), p.getYear(), p.getProjectname(), p.getFeedback(), p.getGrade());
+
+                                for(Thread thread1: thread){
+                                    if(thread1.getProjectid() == studentsProject.getId()){
+                                        Thread finalThread = new Thread(thread1.getID(),thread1.getProjectid(),thread1.getTitle(),thread1.getDate());
+
+                                        allThreads.add(finalThread);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        TextView projectName = findViewById(R.id.txtProjectName);
+
+        projectName.setText(studentsProject.getProjectname());
+
+        TextView unit = findViewById(R.id.txtUnit);
+
+        unit.setText(studentsProject.getUnit());
+
+        TextView grade = findViewById(R.id.txtGrade);
+
+        grade.setText(studentsProject.getGrade());
+
+        TextView feedback = findViewById(R.id.txtFeedback);
+
+        feedback.setText(studentsProject.getFeedback());
+
+        //for the listview of threads
+
+        ListView threadList = findViewById(R.id.threadList);
+
+        ArrayAdapter arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, allThreads);
+
+        threadList.setAdapter(arrayAdapter);
+
+        //now need to create an onItemClickListener to the cheeseList
+        threadList.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+
+            //inside this method, the code to switch activity will happen. Same idea
+            //will apply here for alot of the professional development app
             @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l)
+            {
+
+                //Toast.makeText(MainActivity.this, "you pressed " + allCheeses.get(i).getName(),Toast.LENGTH_SHORT).show();
+
+                //now to create an android intent to open the DetailsActivity,
+                // passing the correct cheese i clicked (selecting from the cheese object array)
+
+                //create an intent, give it context, link it to threadActivity
+                //Intent intent =  new Intent(getApplicationContext(), ThreadActivity.class);
+
+                //now to put the clicked cheese object with the intent so it can be passed over
+                //to that activity when it starts
+
+                //note, will use KEY:VALUE structure to pass the object between activities
+                //this means, the key = 'cheese', value = cheeseObject from arraylist,
+                //using the position that's specified by the 'i' parameter in this method.
+                //intent.putExtra("thread", allThreads.get(i));
+
+                //launch the activity_details
+                //startActivity(intent);
             }
         });
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle);
-        toggle.syncState();
-
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
-
-        Intent ids=getIntent();
-
-        id = ids.getIntExtra("ID",0);
-        System.out.println("your logged in id is: " + id);
     }
 
-    @Override
-    public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.student_home, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    @SuppressWarnings("StatementWithEmptyBody")
-    @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
-        int id = item.getItemId();
-
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-            TextView loggedID = findViewById(R.id.textID);
-            loggedID.setText("hello");
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
-        }
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
-    }
 }

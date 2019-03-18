@@ -7,6 +7,10 @@ public class Thread {
     private String title;
     private String date;
 
+    public Thread()
+    {
+
+    }
     public Thread(int id, int projectid, String title, String date){
         this.id = id;
         this.projectid = projectid;
@@ -52,7 +56,7 @@ public class Thread {
     }
 
     public String toString(){
-        return "Posted at: " + date + " - " + title;
+        return title + " - posted at: " + date;
     }
 
 

@@ -59,6 +59,10 @@ public class Project {
     private String grade;
 
 
+    public Project()
+    {
+
+    }
     public Project(int id, String unit, String year, String projectname, String feedback, String grade) {
         this.id = id;
         this.unit = unit;
