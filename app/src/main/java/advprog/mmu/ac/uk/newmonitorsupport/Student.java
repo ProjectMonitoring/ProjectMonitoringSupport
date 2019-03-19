@@ -47,4 +47,8 @@ public class Student extends AppCompatActivity implements Serializable {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    public String toString(){
+        return username;
+    }
 }

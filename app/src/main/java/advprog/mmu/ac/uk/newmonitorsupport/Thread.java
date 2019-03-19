@@ -56,7 +56,7 @@ public class Thread {
     }
 
     public String toString(){
-        return title + " - posted at: " + date;
+        return title;
     }
 
 

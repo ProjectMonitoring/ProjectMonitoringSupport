@@ -75,7 +75,7 @@ public class LoginPage extends AppCompatActivity {
                 if (individualTutor.getUsername().equals(username) && individualTutor.getPassword().equals(password))
                 {
                     //prepare new intent
-                    Intent intent = new Intent(this, TutorPage.class);
+                    Intent intent = new Intent(this, TutorHome.class);
                     //send the id of the tutor
                     intent.putExtra("ID",individualTutor.getId());
                     //start that activity

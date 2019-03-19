@@ -22,7 +22,7 @@ public class ThreadDAO {
         try
         {
             // the url we wish to connect to
-            URL url = new URL("http://10.182.61.187:8005/projMonitoringdb/apiThread");
+            URL url = new URL("http://100.66.210.159:8005/projMonitoringdb/apiThread");
             // open the connection to the specified URL
             urlConnection = (HttpURLConnection) url.openConnection();
             // get the response from the server in an input stream

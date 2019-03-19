@@ -13,7 +13,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-public class StudentHome extends AppCompatActivity {
+public class TutorHome extends AppCompatActivity {
 
     int id;
     Project studentsProject = new Project();
@@ -21,7 +21,8 @@ public class StudentHome extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_student_home);
+        setContentView(R.layout.activity_tutor_home);
+
 
         Intent ids = getIntent();
 
@@ -91,13 +92,13 @@ public class StudentHome extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l)
             {
 
-                Toast.makeText(StudentHome.this, "you pressed " + allThreads.get(i).getID(),Toast.LENGTH_SHORT).show();
+                Toast.makeText(TutorHome.this, "you pressed " + allThreads.get(i).getID(),Toast.LENGTH_SHORT).show();
 
                 //now to create an android intent to open the DetailsActivity,
                 // passing the correct cheese i clicked (selecting from the cheese object array)
 
                 //create an intent, give it context, link it to threadActivity
-                Intent intent =  new Intent(getApplicationContext(), StudentPosts.class);
+                Intent intent =  new Intent(getApplicationContext(), TutorPosts.class);
 
                 //now to put the clicked cheese object with the intent so it can be passed over
                 //to that activity when it starts
@@ -119,7 +120,7 @@ public class StudentHome extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //create an intent, give it context, link it to threadActivity
-                Intent intent =  new Intent(getApplicationContext(), ViewProjectDetailsActivity.class);
+                Intent intent =  new Intent(getApplicationContext(), TutorViewProjectActivity.class);
 
                 //now to put the clicked cheese object with the intent so it can be passed over
                 //to that activity when it starts
@@ -137,5 +138,4 @@ public class StudentHome extends AppCompatActivity {
 
         });
     }
-
 }

@@ -50,7 +50,7 @@ public class Post {
 
 
     public String toString(){
-        return "Posted at: " + date + " - " + text;
+        return date + " - " + text;
     }
 
 

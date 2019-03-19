@@ -17,14 +17,19 @@ public class Tutor extends AppCompatActivity implements Serializable {
     private String username;
     private String password;
 
+    public Tutor()
+    {
+
+    }
 
     public Tutor(int id, String username, String password){
+        this.id = id;
         this.username=username;
         this.password=password;
     }
 
-    public String getId() {
-        return username;
+    public int getId() {
+        return id;
     }
 
     public void setId(int id) {
