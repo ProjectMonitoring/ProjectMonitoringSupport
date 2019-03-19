@@ -15,6 +15,17 @@ public class Post {
 
     }
 
+    public Post(int threadid, String date, String text)
+    {
+        this.threadid = threadid;
+        this.date = date;
+        this.text = text;
+    }
+    public Post()
+    {
+
+    }
+
     public int getId() {
         return id;
     }

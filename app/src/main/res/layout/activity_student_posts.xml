@@ -6,6 +6,19 @@
     android:layout_height="match_parent"
     tools:context=".StudentPosts">
 
+    <Button
+        android:id="@+id/btnInsertPost"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="128dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="44dp"
+        android:text="Add to Thread"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent" />
+
     <ListView
         android:id="@+id/listPosts"
         android:layout_width="395dp"
@@ -31,13 +44,4 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/txtViewThreadDate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="31dp"
-        android:layout_marginEnd="84dp"
-        android:text="date"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 </android.support.constraint.ConstraintLayout>

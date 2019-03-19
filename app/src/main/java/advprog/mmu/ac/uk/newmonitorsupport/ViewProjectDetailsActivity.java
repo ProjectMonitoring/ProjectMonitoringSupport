@@ -41,9 +41,6 @@ public class ViewProjectDetailsActivity extends AppCompatActivity {
         TextView projectUnit = findViewById(R.id.txtProjectUnit);
         projectUnit.setText("Unit: " + selectedProject.getUnit());
 
-        TextView projectFeedback = findViewById(R.id.txtProjectFeedback);
-        projectFeedback.setText("Tutor Feedback: " + selectedProject.getFeedback());
-
         //create studentDAO
         StudentDAO studentDAO =new StudentDAO();
         //grab all students and put in arraylist

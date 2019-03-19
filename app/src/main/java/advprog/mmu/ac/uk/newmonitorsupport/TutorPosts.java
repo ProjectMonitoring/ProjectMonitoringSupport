@@ -59,11 +59,6 @@ public class TutorPosts extends AppCompatActivity {
 
         threadName.setText(selectedThread.getTitle());
 
-        TextView threadDate = findViewById(R.id.txtViewThreadDate);
-
-        threadDate.setText(selectedThread.getDate());
-
-
         ListView postList = findViewById(R.id.listPosts);
 
         ArrayAdapter arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, threadSpecificPosts);
@@ -72,12 +67,34 @@ public class TutorPosts extends AppCompatActivity {
 
 
 
-        Button button = findViewById(R.id.btnInsertPost);
+        Button buttonInsert = findViewById(R.id.btnInsertPost);
         if(threadID != 9)
         {
-            button.setVisibility(View.GONE);
+            buttonInsert.setVisibility(View.GONE);
         }
 
+
+        buttonInsert.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                //create an intent, give it context, link it to threadActivity
+                Intent intent =  new Intent(getApplicationContext(), postInserter.class);
+
+                //now to put the clicked cheese object with the intent so it can be passed over
+                //to that activity when it starts
+
+                //note, will use KEY:VALUE structure to pass the object between activities
+                //this means, the key = 'cheese', value = cheeseObject from arraylist,
+                //using the position that's specified by the 'i' parameter in this method.
+                intent.putExtra("threadID", threadID);
+
+
+                //launch the activity_details
+                startActivity(intent);
+
+            }
+
+        });
 
     }
 }
