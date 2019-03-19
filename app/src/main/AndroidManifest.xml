@@ -30,6 +30,10 @@
         <activity android:name=".LoginPage" />
         <activity android:name=".StudentPage" />
         <activity android:name=".TutorPage" />
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
     </application>
 
 </manifest>

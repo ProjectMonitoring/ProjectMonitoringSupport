@@ -6,67 +6,73 @@
     android:layout_height="match_parent"
     tools:context=".ViewProjectDetailsActivity">
 
-    <TextView
-        android:id="@+id/txtProjectName"
-        android:layout_width="288dp"
-        android:layout_height="27dp"
-        android:layout_marginStart="38dp"
-        android:layout_marginTop="48dp"
-        android:layout_marginEnd="292dp"
-        android:text="Project Name"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.106"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/txtProjectUnit"
-        android:layout_width="274dp"
-        android:layout_height="27dp"
-        android:layout_marginStart="38dp"
-        android:layout_marginTop="148dp"
-        android:layout_marginEnd="193dp"
-        android:text="unit"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.234"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <ListView
         android:id="@+id/studentList"
         android:layout_width="395dp"
-        android:layout_height="314dp"
+        android:layout_height="330dp"
         android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="40dp"
+        android:dividerHeight="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
 
     <TextView
         android:id="@+id/txtTeamMatesDesc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="130dp"
+        android:layout_marginTop="240dp"
         android:layout_marginEnd="131dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="8dp"
+        android:fontFamily="monospace"
         android:text="Current Team Members"
-        app:layout_constraintBottom_toTopOf="@+id/studentList"
+        android:textColor="@color/colorPrimary"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintHorizontal_bias="0.444"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.075" />
+
+    <TextView
+        android:id="@+id/txtProjectUnit"
+        android:layout_width="274dp"
+        android:layout_height="27dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="140dp"
+        android:layout_marginEnd="8dp"
+        android:text="unit"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.752"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/txtViewTutor"
         android:layout_width="296dp"
-        android:layout_height="24dp"
-        android:layout_marginStart="38dp"
+        android:layout_height="21dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="96dp"
-        android:layout_marginEnd="128dp"
+        android:layout_marginEnd="8dp"
         android:text="Tutor"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.431"
+        app:layout_constraintHorizontal_bias="0.919"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/txtProjectName"
+        android:layout_width="288dp"
+        android:layout_height="23dp"
+        android:layout_marginStart="92dp"
+        android:layout_marginTop="52dp"
+        android:text="Project Name"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 </android.support.constraint.ConstraintLayout>

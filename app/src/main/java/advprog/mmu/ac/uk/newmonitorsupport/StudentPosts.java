@@ -1,5 +1,6 @@
 package advprog.mmu.ac.uk.newmonitorsupport;
 
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
@@ -15,25 +16,17 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.io.UnsupportedEncodingException;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
-
-import javax.net.ssl.HttpsURLConnection;
 
 public class StudentPosts extends AppCompatActivity {
 
     int threadID;
     ListView postList;
+
+    ArrayList<Post> allPosts = new ArrayList<>();
+
+    ArrayList<Post> threadSpecificPosts = new ArrayList<Post>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,9 +55,9 @@ public class StudentPosts extends AppCompatActivity {
 
         PostDAO postDAO = new PostDAO();
 
-        final ArrayList<Post> allPosts = postDAO.getPosts();
+        allPosts = postDAO.getPosts();
 
-        ArrayList<Post> threadSpecificPosts = new ArrayList<Post>();
+        threadSpecificPosts = new ArrayList<Post>();
 
         for (Post indiviudalPost : allPosts) {
             if (indiviudalPost.getThreadid() == threadID) {
@@ -115,7 +108,7 @@ public class StudentPosts extends AppCompatActivity {
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 
-        final HashMap<String, Integer> params = new HashMap<>();
+        final HashMap<String, String> params = new HashMap<>();
 
         if (threadID != 9) {
             postList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
@@ -131,102 +124,84 @@ public class StudentPosts extends AppCompatActivity {
 
                     //oast.makeText(MainActivity.this, "Item Deleted", Toast.LENGTH_LONG).show();
 
-                    System.out.println("worked");
+                    //System.out.println("worked");
 
 
-                    Toast.makeText(StudentPosts.this, "you pressed " + allPosts.get(position).getId(),Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(StudentPosts.this, "you pressed " + allPosts.get(position).getId(),Toast.LENGTH_SHORT).show();
 
 
-                    params.put("id", allPosts.get(position).getId());
+                    //String url = "http://10.182.61.187:8005/projMonitoringdb/apiPost";
+                    //performPostCall(url, params);
 
-                    String url = "http://100.66.210.159:8005/projMonitoringdb/apiPost";
 
-                    performPostCall(url, params);
+                    //using alert
+                    AlertDialog.Builder alert = new AlertDialog.Builder(
+                                    StudentPosts.this);
+
+                    //title of alert
+                    alert.setTitle("Alert");
+                    //msg within the alert
+                    alert.setMessage("Are you sure to delete record");
+
+                    //if yes
+                    alert.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            //do your work here
+                            dialog.dismiss();
+
+                        }
+                    });
+                    //if no
+                    alert.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                            dialog.dismiss();
+                        }
+                    });
+
+                    //show
+                    alert.show();
 
                     return true;
                 }
 
             });
 
+
+
+
         }
-    }
-    public String performPostCall(String requestURL, HashMap<String, Integer> postDataParams) {
-        URL url;
-        String response = "";
-
-        try {
-            url = new URL(requestURL);
-
-            //create the connection object
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setReadTimeout(15000);
-            conn.setConnectTimeout(15000);
-            conn.setRequestMethod("DELETE");
-            conn.setDoInput(true);
-            conn.setDoOutput(true);
-
-            //write/send/post data to the connection using output stream and buffered writer
-
-            OutputStream os = conn.getOutputStream();
-            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os, "UTF-8"));
-
-            //write / send / post key / value data (url encoded) to the server
-            writer.write(getPostDataString(postDataParams));
-
-            //clear the writer
-            writer.flush();
-            writer.close();
-
-            //close output stream
-            os.close();
-
-            //get the serve response code to determine what to do next (i.e success / erro)
-            int responseCode = conn.getResponseCode();
-            System.out.println("responseCode = " + responseCode);
-
-            if (responseCode == HttpsURLConnection.HTTP_OK) {
-
-                Toast.makeText(this, "post deleted", Toast.LENGTH_LONG).show();
-                String line;
-                BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-                while ((line = br.readLine()) != null) {
-                    response += line;
-                }
-            } else {
-                Toast.makeText(this, "Error failed to delete post", Toast.LENGTH_LONG).show();
-                response = "";
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        System.out.println("response = " + response);
-        return response;
-    }
-
-    //this method converts a hashmap to a URL query string of key/value pairs
-    //e.g: name = kaleem&job=tutors)
-    private String getPostDataString(HashMap<String, String> params) throws UnsupportedEncodingException {
-        StringBuilder result = new StringBuilder();
-        boolean first = true;
-        for(Map.Entry<String, String> entry: params.entrySet())
-        {
-            if (first)
-            {
-                first = false;
-            }
-            else
-            {
-                result.append("&");
-            }
-            result.append(URLEncoder.encode(entry.getKey(), "UTF-8"));
-            result.append("=");
-            result.append(URLEncoder.encode(entry.getValue(), "UTF-8"));
-        }
-        return result.toString();
 
     }
 
+
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+
+        PostDAO postDAO = new PostDAO();
+
+        allPosts = postDAO.getPosts();
+
+        threadSpecificPosts = new ArrayList<Post>();
+
+        for (Post indiviudalPost : allPosts) {
+            if (indiviudalPost.getThreadid() == threadID) {
+                threadSpecificPosts.add(indiviudalPost);
+            }
+        }
+        postList = findViewById(R.id.listPosts);
+
+        final ArrayAdapter arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, threadSpecificPosts);
+
+        postList.setAdapter(arrayAdapter);
+    }
 }
 
-}

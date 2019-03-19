@@ -14,6 +14,10 @@ import java.util.ArrayList;
 public class TutorPosts extends AppCompatActivity {
 
     int threadID;
+
+    ArrayList<Post> allPosts = new ArrayList<>();
+
+    ArrayList<Post> threadSpecificPosts = new ArrayList<Post>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,9 +46,9 @@ public class TutorPosts extends AppCompatActivity {
 
         PostDAO postDAO = new PostDAO();
 
-        ArrayList<Post> allPosts = postDAO.getPosts();
+        allPosts = postDAO.getPosts();
 
-        ArrayList<Post> threadSpecificPosts = new ArrayList<Post>();
+        threadSpecificPosts = new ArrayList<Post>();
 
         for(Post indiviudalPost: allPosts )
         {
@@ -96,5 +100,29 @@ public class TutorPosts extends AppCompatActivity {
 
         });
 
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+
+        PostDAO postDAO = new PostDAO();
+
+        allPosts = postDAO.getPosts();
+
+        threadSpecificPosts = new ArrayList<Post>();
+
+        for (Post indiviudalPost : allPosts) {
+            if (indiviudalPost.getThreadid() == threadID) {
+                threadSpecificPosts.add(indiviudalPost);
+            }
+        }
+        ListView postList = findViewById(R.id.listPosts);
+
+        ArrayAdapter arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, threadSpecificPosts);
+
+        postList.setAdapter(arrayAdapter);
     }
 }

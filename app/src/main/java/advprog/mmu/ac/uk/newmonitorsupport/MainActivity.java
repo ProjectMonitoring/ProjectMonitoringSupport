@@ -65,14 +65,7 @@ public class MainActivity extends AppCompatActivity {
 *   pass a variable. If we cant achieve that feature then, it may be best to make
 *   the login page the Mainactivity. */
 
-    public void goLogin(View view){
 
-        Button goLoginbtn=findViewById(R.id.goLoginbtn);
-
-        Intent login= new Intent(this,LoginPage.class);
-        startActivity(login);
-        //Toast.makeText(LoginPage.this,idStudent);
-    }
 
 
 

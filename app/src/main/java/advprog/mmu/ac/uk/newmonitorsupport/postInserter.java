@@ -101,9 +101,11 @@ public class postInserter extends AppCompatActivity {
                 //params.put("apikey","*apikey*");
                 //url to connect
                 //String url = "http://10.182.54.190:8000/add_contact_json";
-                String url = "http://100.66.210.159:8005/projMonitoringdb/apiPost";
+                String url = "http://10.182.61.187:8005/projMonitoringdb/apiPost";
                 //now to send it
                 performPostCall(url, params);
+
+
             }
         });
 
