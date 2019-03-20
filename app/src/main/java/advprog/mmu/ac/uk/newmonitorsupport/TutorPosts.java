@@ -147,7 +147,7 @@ public class TutorPosts extends AppCompatActivity {
 
                             URL url = null;
                             try {
-                                url = new URL("http://192.168.1.117:8005/projMonitoringdb/apiPost?id=" + postToDelete);
+                                url = new URL("http://10.182.58.181:8005/projMonitoringdb/apiPost?id=" + postToDelete);
                             } catch (MalformedURLException exception) {
                                 exception.printStackTrace();
                             }

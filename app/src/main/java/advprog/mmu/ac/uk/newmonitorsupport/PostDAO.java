@@ -22,7 +22,7 @@ public class PostDAO {
         try
         {
             // the url we wish to connect to
-            URL url = new URL("http://192.168.1.117:8005/projMonitoringdb/apiPost");
+            URL url = new URL("http://10.182.58.181:8005/projMonitoringdb/apiPost");
             // open the connection to the specified URL
             urlConnection = (HttpURLConnection) url.openConnection();
             // get the response from the server in an input stream
