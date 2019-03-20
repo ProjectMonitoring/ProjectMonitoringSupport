@@ -144,7 +144,7 @@ public class StudentPosts extends AppCompatActivity {
                     //title of alert
                     alert.setTitle("Alert");
                     //msg within the alert
-                    alert.setMessage("Are you sure to delete record " + postinStringversion);
+                    alert.setMessage("Are you sure to delete this record?");
 
                     //if yes
                     alert.setPositiveButton("YES", new DialogInterface.OnClickListener() {
