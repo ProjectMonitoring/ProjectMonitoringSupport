@@ -16,8 +16,22 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
+
+import javax.net.ssl.HttpsURLConnection;
 
 public class StudentPosts extends AppCompatActivity {
 
@@ -72,7 +86,7 @@ public class StudentPosts extends AppCompatActivity {
 
         postList = findViewById(R.id.listPosts);
 
-        final ArrayAdapter arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, threadSpecificPosts);
+        ArrayAdapter arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, threadSpecificPosts);
 
         postList.setAdapter(arrayAdapter);
 
@@ -108,7 +122,7 @@ public class StudentPosts extends AppCompatActivity {
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 
-        final HashMap<String, String> params = new HashMap<>();
+
 
         if (threadID != 9) {
             postList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
@@ -118,21 +132,10 @@ public class StudentPosts extends AppCompatActivity {
                                                int position, long id) {
                     // TODO Auto-generated method stub
 
-                    //postList.remove(position);
-
-                    //arrayAdapter.notifyDataSetChanged();
-
-                    //oast.makeText(MainActivity.this, "Item Deleted", Toast.LENGTH_LONG).show();
-
-                    //System.out.println("worked");
-
+                    final int postToDelete =  threadSpecificPosts.get(position).getId();
+                    String postinStringversion = String.valueOf(postToDelete);
 
                     //Toast.makeText(StudentPosts.this, "you pressed " + allPosts.get(position).getId(),Toast.LENGTH_SHORT).show();
-
-
-                    //String url = "http://10.182.61.187:8005/projMonitoringdb/apiPost";
-                    //performPostCall(url, params);
-
 
                     //using alert
                     AlertDialog.Builder alert = new AlertDialog.Builder(
@@ -141,18 +144,44 @@ public class StudentPosts extends AppCompatActivity {
                     //title of alert
                     alert.setTitle("Alert");
                     //msg within the alert
-                    alert.setMessage("Are you sure to delete record");
+                    alert.setMessage("Are you sure to delete record " + postinStringversion);
 
                     //if yes
                     alert.setPositiveButton("YES", new DialogInterface.OnClickListener() {
 
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            //do your work here
+
+
+                            URL url = null;
+                            try {
+                                url = new URL("http://192.168.1.117:8005/projMonitoringdb/apiPost?id=" + postToDelete);
+                            } catch (MalformedURLException exception) {
+                                exception.printStackTrace();
+                            }
+                            HttpURLConnection httpURLConnection = null;
+                            try {
+                                httpURLConnection = (HttpURLConnection) url.openConnection();
+                                //httpURLConnection.setRequestProperty("Content-Type",
+                                //        "application/x-www-form-urlencoded");
+                                httpURLConnection.setRequestMethod("DELETE");
+                                System.out.println(httpURLConnection.getResponseCode());
+                            } catch (IOException exception) {
+                                exception.printStackTrace();
+                            } finally {
+                                if (httpURLConnection != null) {
+                                    httpURLConnection.disconnect();
+                                }
+                            }
+
+
+                            setListView();
+
                             dialog.dismiss();
 
                         }
                     });
+
                     //if no
                     alert.setNegativeButton("NO", new DialogInterface.OnClickListener() {
 
@@ -179,13 +208,8 @@ public class StudentPosts extends AppCompatActivity {
     }
 
 
-
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-
+    public void setListView()
+    {
         PostDAO postDAO = new PostDAO();
 
         allPosts = postDAO.getPosts();
@@ -197,11 +221,20 @@ public class StudentPosts extends AppCompatActivity {
                 threadSpecificPosts.add(indiviudalPost);
             }
         }
+
         postList = findViewById(R.id.listPosts);
 
         final ArrayAdapter arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, threadSpecificPosts);
 
         postList.setAdapter(arrayAdapter);
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        setListView();
     }
 }
 

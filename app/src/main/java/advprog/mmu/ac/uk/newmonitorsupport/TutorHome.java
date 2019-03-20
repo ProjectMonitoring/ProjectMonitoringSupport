@@ -92,7 +92,7 @@ public class TutorHome extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l)
             {
 
-                Toast.makeText(TutorHome.this, "you pressed " + allThreads.get(i).getID(),Toast.LENGTH_SHORT).show();
+                //Toast.makeText(TutorHome.this, "you pressed " + allThreads.get(i).getID(),Toast.LENGTH_SHORT).show();
 
                 //now to create an android intent to open the DetailsActivity,
                 // passing the correct cheese i clicked (selecting from the cheese object array)
